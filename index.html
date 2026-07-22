@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lakshmi Tulasi Maradana — Marketing Analyst</title>
+<meta name="description" content="Marketing analyst portfolio — churn analysis, A/B testing, attribution modeling, customer segmentation, and NLP sentiment analysis.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #16211F;
+    --paper: #FAFBF9;
+    --card: #FFFFFF;
+    --teal: #0E6B5C;
+    --teal-soft: #E3F0ED;
+    --amber: #C77E1E;
+    --muted: #66716D;
+    --line: #E2E6E3;
+    --mono: 'IBM Plex Mono', monospace;
+    --display: 'Space Grotesk', sans-serif;
+    --body: 'Inter', sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--body); background: var(--paper); color: var(--ink); line-height: 1.65; font-size: 16px; }
+  .wrap { max-width: 1060px; margin: 0 auto; padding: 0 24px; }
+
+  /* NAV */
+  nav { position: sticky; top: 0; background: rgba(250,251,249,0.92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); z-index: 10; }
+  .nav-inner { display: flex; justify-content: space-between; align-items: center; padding: 16px 24px; max-width: 1060px; margin: 0 auto; }
+  .nav-name { font-family: var(--display); font-weight: 600; font-size: 17px; letter-spacing: -0.01em; }
+  .nav-links { display: flex; gap: 22px; }
+  .nav-links a { color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 500; }
+  .nav-links a:hover { color: var(--teal); }
+
+  /* HERO */
+  header { padding: 84px 0 56px; }
+  .eyebrow { font-family: var(--mono); font-size: 13px; color: var(--teal); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 18px; }
+  h1 { font-family: var(--display); font-weight: 600; font-size: clamp(34px, 5.5vw, 54px); line-height: 1.12; letter-spacing: -0.02em; max-width: 780px; }
+  h1 .hl { color: var(--teal); }
+  .hero-sub { margin-top: 22px; font-size: 17px; color: var(--muted); max-width: 640px; }
+  .hero-cta { margin-top: 30px; display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn { display: inline-block; text-decoration: none; font-weight: 500; font-size: 15px; padding: 12px 22px; border-radius: 8px; transition: transform 0.15s ease; }
+  .btn:hover { transform: translateY(-1px); }
+  .btn-primary { background: var(--teal); color: #fff; }
+  .btn-ghost { border: 1.5px solid var(--line); color: var(--ink); background: var(--card); }
+
+  /* KPI STRIP */
+  .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; margin: 56px 0 0; }
+  .kpi { background: var(--card); padding: 26px 24px; }
+  .kpi-num { font-family: var(--mono); font-size: 30px; font-weight: 500; color: var(--ink); }
+  .kpi-num span { color: var(--amber); }
+  .kpi-label { font-size: 13px; color: var(--muted); margin-top: 6px; }
+
+  /* SECTIONS */
+  section { padding: 72px 0 8px; }
+  .sec-head { display: flex; align-items: baseline; gap: 16px; margin-bottom: 34px; }
+  .sec-head h2 { font-family: var(--display); font-weight: 600; font-size: 27px; letter-spacing: -0.01em; }
+  .sec-head .count { font-family: var(--mono); font-size: 14px; color: var(--muted); }
+
+  /* PROJECT CARDS */
+  .projects { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 22px; }
+  .proj { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 28px; display: flex; flex-direction: column; transition: border-color 0.2s, transform 0.15s; }
+  .proj:hover { border-color: var(--teal); transform: translateY(-2px); }
+  .proj-metric { font-family: var(--mono); font-size: 34px; font-weight: 500; color: var(--teal); letter-spacing: -0.01em; }
+  .proj-metric-label { font-size: 13px; color: var(--muted); margin-top: 2px; margin-bottom: 18px; }
+  .proj h3 { font-family: var(--display); font-size: 19px; font-weight: 600; margin-bottom: 10px; }
+  .proj p { font-size: 14.5px; color: var(--muted); flex: 1; }
+  .proj-tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 16px 0 18px; }
+  .tag { font-family: var(--mono); font-size: 11.5px; background: var(--teal-soft); color: var(--teal); padding: 4px 10px; border-radius: 20px; }
+  .tag.cdf { background: #FBF1E2; color: var(--amber); }
+  .proj a { color: var(--teal); font-weight: 500; font-size: 14px; text-decoration: none; }
+  .proj a:hover { text-decoration: underline; }
+
+  /* SKILLS */
+  .skill-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; }
+  .skill-block { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 22px 24px; }
+  .skill-block h4 { font-family: var(--display); font-size: 15px; font-weight: 600; margin-bottom: 10px; color: var(--teal); }
+  .skill-block p { font-size: 14px; color: var(--muted); }
+
+  /* EXPERIENCE */
+  .xp { border-left: 2px solid var(--line); padding-left: 28px; }
+  .xp-item { margin-bottom: 36px; position: relative; }
+  .xp-item::before { content: ''; position: absolute; left: -34.5px; top: 7px; width: 11px; height: 11px; border-radius: 50%; background: var(--teal); }
+  .xp-title { font-family: var(--display); font-weight: 600; font-size: 17px; }
+  .xp-meta { font-family: var(--mono); font-size: 13px; color: var(--muted); margin: 3px 0 10px; }
+  .xp-item ul { padding-left: 18px; }
+  .xp-item li { font-size: 14.5px; color: var(--muted); margin-bottom: 6px; }
+
+  /* FOOTER */
+  footer { margin-top: 80px; background: var(--ink); color: #E9EDEB; padding: 60px 0; }
+  footer h2 { font-family: var(--display); font-size: 30px; font-weight: 600; margin-bottom: 14px; }
+  footer p { color: #9FAAA5; max-width: 520px; }
+  .foot-links { margin-top: 26px; display: flex; gap: 16px; flex-wrap: wrap; }
+  .foot-links a { color: #E9EDEB; border: 1px solid #3A4642; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-size: 14.5px; }
+  .foot-links a:hover { border-color: var(--amber); color: #fff; }
+  .foot-note { margin-top: 44px; font-family: var(--mono); font-size: 12.5px; color: #6B7772; }
+
+  @media (max-width: 640px) {
+    .nav-links { display: none; }
+    header { padding: 56px 0 40px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .btn:hover, .proj:hover { transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="nav-name">Lakshmi Maradana</div>
+    <div class="nav-links">
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#experience">Experience</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<header class="wrap">
+  <div class="eyebrow">Marketing Analyst · Devon, PA</div>
+  <h1>I find the story in customer data — and turn it into <span class="hl">revenue decisions</span>.</h1>
+  <p class="hero-sub">Marketing analyst with an M.S. in Computer Science from Villanova University. I build end-to-end analyses across churn, A/B testing, attribution, segmentation, and sentiment — always leading with the number that matters to the business.</p>
+  <div class="hero-cta">
+    <a class="btn btn-primary" href="#projects">See my work</a>
+    <a class="btn btn-ghost" href="https://github.com/lakshmimaradana" target="_blank" rel="noopener">GitHub profile</a>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi">
+      <div class="kpi-num"><span>$</span>3.8M+</div>
+      <div class="kpi-label">Revenue opportunities identified across projects</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-num">300K<span>+</span></div>
+      <div class="kpi-label">User records analyzed with statistical rigor</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-num">6</div>
+      <div class="kpi-label">End-to-end analytics projects, all on GitHub</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-num">5</div>
+      <div class="kpi-label">Attribution models built and compared</div>
+    </div>
+  </div>
+</header>
+
+<section id="projects" class="wrap">
+  <div class="sec-head"><h2>Projects</h2><span class="count">06 — metric first, always</span></div>
+  <div class="projects">
+
+    <div class="proj">
+      <div class="proj-metric">$1.67M</div>
+      <div class="proj-metric-label">annual revenue at risk identified</div>
+      <h3>Customer Churn Analysis Dashboard</h3>
+      <p>Analyzed 7,043 telecom customers, found a 975-customer segment churning at 68%, and built an interactive dashboard with KPI cards and retention recommendations.</p>
+      <div class="proj-tags"><span class="tag">Python</span><span class="tag">SQL</span><span class="tag">Plotly Dash</span><span class="tag">Pandas</span></div>
+      <a href="https://github.com/lakshmimaradana/customer-churn-analysis" target="_blank" rel="noopener">View on GitHub →</a>
+    </div>
+
+    <div class="proj">
+      <div class="proj-metric">+21.9%</div>
+      <div class="proj-metric-label">conversion lift proven at 99.9% confidence</div>
+      <h3>Email Campaign A/B Test</h3>
+      <p>Evaluated a 9,500-user email test with z-tests. The new campaign's lift projects $2.1M in additional annual revenue at full rollout.</p>
+      <div class="proj-tags"><span class="tag">SciPy</span><span class="tag">StatsModels</span><span class="tag">Hypothesis Testing</span></div>
+      <a href="https://github.com/lakshmimaradana/ab-test-analysis" target="_blank" rel="noopener">View on GitHub →</a>
+    </div>
+
+    <div class="proj">
+      <div class="proj-metric">5.0x</div>
+      <div class="proj-metric-label">ROAS at the winning discount level</div>
+      <h3>Amazon BTP Discount A/B Test</h3>
+      <p>Compared 10% vs 15% Brand Tailored Promotions discounts on Amazon Seller Central — the 15% level drove 22% more GMV and 31% more conversions (p &lt; 0.001).</p>
+      <div class="proj-tags"><span class="tag cdf">CDF Internship</span><span class="tag">Amazon Seller Central</span><span class="tag">ROAS</span></div>
+      <a href="https://github.com/lakshmimaradana/amazon-btp-analysis" target="_blank" rel="noopener">View on GitHub →</a>
+    </div>
+
+    <div class="proj">
+      <div class="proj-metric">290K+</div>
+      <div class="proj-metric-label">user records analyzed — costly rollout prevented</div>
+      <h3>Landing Page A/B Test Analysis</h3>
+      <p>Applied t-tests, chi-squared tests, and confidence intervals to a landing page experiment. The redesign wasn't significant (p = 0.19) — the honest recommendation saved the switch.</p>
+      <div class="proj-tags"><span class="tag cdf">CDF Internship</span><span class="tag">T-Test</span><span class="tag">Chi-Squared</span><span class="tag">Confidence Intervals</span></div>
+      <a href="https://github.com/lakshmimaradana/cdf-ab-test-analysis" target="_blank" rel="noopener">View on GitHub →</a>
+    </div>
+
+    <div class="proj">
+      <div class="proj-metric">5 models</div>
+      <div class="proj-metric-label">attribution frameworks compared on 1,000 journeys</div>
+      <h3>Marketing Channel Attribution</h3>
+      <p>Modeled customer journeys across 5 channels under first-touch, last-touch, linear, time-decay, and position-based attribution — producing a data-driven $50K budget allocation.</p>
+      <div class="proj-tags"><span class="tag cdf">CDF Internship</span><span class="tag">Attribution</span><span class="tag">Budget Modeling</span></div>
+      <a href="https://github.com/lakshmimaradana/marketing-attribution-model" target="_blank" rel="noopener">View on GitHub →</a>
+    </div>
+
+    <div class="proj">
+      <div class="proj-metric">71%</div>
+      <div class="proj-metric-label">VADER accuracy benchmarked vs human labels</div>
+      <h3>Social Media Sentiment Analysis</h3>
+      <p>Classified sentiment across 10,000 tweets with NLP (47% positive / 26% negative), and surfaced the exact words driving brand love and complaints through word clouds.</p>
+      <div class="proj-tags"><span class="tag">NLP</span><span class="tag">VADER</span><span class="tag">WordCloud</span></div>
+      <a href="https://github.com/lakshmimaradana/social-media-sentiment-analysis" target="_blank" rel="noopener">View on GitHub →</a>
+    </div>
+
+  </div>
+</section>
+
+<section id="skills" class="wrap">
+  <div class="sec-head"><h2>Skills</h2><span class="count">tools I've actually shipped with</span></div>
+  <div class="skill-grid">
+    <div class="skill-block">
+      <h4>Programming &amp; Data</h4>
+      <p>Python (Pandas, NumPy), SQL, Jupyter, Git &amp; GitHub, Excel</p>
+    </div>
+    <div class="skill-block">
+      <h4>Statistics &amp; Testing</h4>
+      <p>A/B testing, t-tests, chi-squared, confidence intervals, SciPy, StatsModels</p>
+    </div>
+    <div class="skill-block">
+      <h4>Machine Learning &amp; NLP</h4>
+      <p>K-Means clustering, scikit-learn, RFM analysis, VADER sentiment analysis</p>
+    </div>
+    <div class="skill-block">
+      <h4>Marketing Analytics</h4>
+      <p>Attribution modeling, ROAS &amp; GMV, churn &amp; cohort analysis, segmentation, Amazon Seller Central, Looker Studio, Plotly Dash</p>
+    </div>
+  </div>
+</section>
+
+<section id="experience" class="wrap">
+  <div class="sec-head"><h2>Experience</h2></div>
+  <div class="xp">
+    <div class="xp-item">
+      <div class="xp-title">Data Analyst Intern — Community Dreams Foundation</div>
+      <div class="xp-meta">Apr 2026 – Present</div>
+      <ul>
+        <li>Ran an Amazon BTP discount A/B test that identified the 15% discount as driving 22% more GMV at 5.0x ROAS.</li>
+        <li>Analyzed a 290K+ user landing page experiment; prevented rollout of a statistically insignificant redesign.</li>
+        <li>Designed a multi-touch attribution framework and built a Looker Studio dashboard for GMV and ROAS tracking.</li>
+      </ul>
+    </div>
+    <div class="xp-item">
+      <div class="xp-title">Collections &amp; Stewardship Technician — Falvey Library, Villanova University</div>
+      <div class="xp-meta">Jun 2024 – Dec 2025</div>
+      <ul>
+        <li>Maintained cataloging and acquisitions databases with high data integrity across large collections.</li>
+        <li>Produced digital content for the Digital Library and verified shipments against invoices.</li>
+      </ul>
+    </div>
+    <div class="xp-item">
+      <div class="xp-title">M.S. Computer Science — Villanova University</div>
+      <div class="xp-meta">Aug 2023 – Dec 2025</div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <h2>Let's talk data.</h2>
+    <p>I'm actively seeking full-time Marketing Analyst roles — open to remote, hybrid, or on-site. If you're hiring someone who leads with the business number, I'd love to connect.</p>
+    <div class="foot-links">
+      <a href="https://www.linkedin.com/in/lakshmitulasimaradana" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://github.com/lakshmimaradana" target="_blank" rel="noopener">GitHub</a>
+      <a href="mailto:your.email@example.com">Email me</a>
+    </div>
+    <div class="foot-note">Lakshmi Tulasi Maradana · Devon, PA · Built with data, deployed with intent.</div>
+  </div>
+</footer>
+
+</body>
+</html>
