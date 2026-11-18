@@ -1,279 +1,539 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta name="google-site-verification" content="sFWshaWbHIiMrhT4KSeo0Tt6XIprCElF1TBRyegopcI" />
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lakshmi Tulasi Maradana — Marketing Analyst</title>
-<meta name="description" content="Marketing analyst portfolio — churn analysis, A/B testing, attribution modeling, customer segmentation, and NLP sentiment analysis.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lakshmi Tulasi Maradana | GTM and AI search</title>
+<meta name="description" content="Lakshmi Tulasi Maradana works on go-to-market and AI search (AEO/GEO): she checks how ChatGPT, Perplexity, Google AI Mode and Claude recommend businesses, finds why good ones get left out, and runs the outreach.">
+<meta property="og:title" content="Lakshmi Tulasi Maradana | GTM and AI search">
+<meta property="og:description" content="Case studies on why AI assistants skip good local businesses, plus A/B tests and tools built with Python and Claude Code.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://lakshmimaradana.github.io/">
+<link rel="canonical" href="https://lakshmimaradana.github.io/">
+<link rel="preload" href="fonts/bricolage.woff2" as="font" type="font/woff2" crossorigin>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Lakshmi Tulasi Maradana",
+  "jobTitle": "GTM Analyst",
+  "description": "Go-to-market and AI search (AEO/GEO) analyst. M.S. in Computer Science, Villanova University.",
+  "address": {"@type": "PostalAddress", "addressLocality": "Devon", "addressRegion": "PA", "addressCountry": "US"},
+  "alumniOf": {"@type": "CollegeOrUniversity", "name": "Villanova University"},
+  "email": "mailto:lakshmitulasimaradana@gmail.com",
+  "url": "https://lakshmimaradana.github.io/",
+  "sameAs": ["https://www.linkedin.com/in/lakshmitulasimaradana", "https://github.com/lakshmimaradana"],
+  "knowsAbout": ["Go-to-market strategy", "Answer engine optimization", "Generative engine optimization", "AI visibility tracking", "A/B testing", "Python", "SQL"]
+}
+</script>
 <style>
-  :root {
-    --ink: #16211F;
-    --paper: #FAFBF9;
-    --card: #FFFFFF;
-    --teal: #0E6B5C;
-    --teal-soft: #E3F0ED;
-    --amber: #C77E1E;
-    --muted: #66716D;
-    --line: #E2E6E3;
-    --mono: 'IBM Plex Mono', monospace;
-    --display: 'Space Grotesk', sans-serif;
-    --body: 'Inter', sans-serif;
-  }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body { font-family: var(--body); background: var(--paper); color: var(--ink); line-height: 1.65; font-size: 16px; }
-  .wrap { max-width: 1060px; margin: 0 auto; padding: 0 24px; }
+@font-face { font-family: "Bricolage Grotesque"; src: url("fonts/bricolage.woff2") format("woff2"); font-weight: 200 800; font-display: swap; }
+@font-face { font-family: "Source Serif 4"; src: url("fonts/sourceserif.woff2") format("woff2"); font-weight: 200 900; font-display: swap; }
+@font-face { font-family: "Source Serif 4"; src: url("fonts/sourceserif-italic.woff2") format("woff2"); font-weight: 200 900; font-style: italic; font-display: swap; }
+:root {
+  --paper: #F3F4F1;
+  --sheet: #FFFFFF;
+  --ink: #16213A;
+  --slate: #5B6478;
+  --line: #D9DCE3;
+  --cite: #4B3FD6;
+  --cite-soft: #E6E3FF;
+  --mark: #FFE58A;
+  --display: "Bricolage Grotesque", system-ui, sans-serif;
+  --text: "Source Serif 4", Georgia, serif;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  margin: 0; background: var(--paper); color: var(--ink);
+  font: 18px/1.65 var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--cite); text-underline-offset: 3px; }
+a:hover { text-decoration-thickness: 2px; }
+:focus-visible { outline: 3px solid var(--cite); outline-offset: 3px; border-radius: 4px; }
+mark { background: linear-gradient(transparent 55%, var(--mark) 55%); color: inherit; padding: 0 .1em; }
 
-  /* NAV */
-  nav { position: sticky; top: 0; background: rgba(250,251,249,0.92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); z-index: 10; }
-  .nav-inner { display: flex; justify-content: space-between; align-items: center; padding: 16px 24px; max-width: 1060px; margin: 0 auto; }
-  .nav-name { font-family: var(--display); font-weight: 600; font-size: 17px; letter-spacing: -0.01em; }
-  .nav-links { display: flex; gap: 22px; }
-  .nav-links a { color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 500; }
-  .nav-links a:hover { color: var(--teal); }
+/* ---------- top bar ---------- */
+.top {
+  display: flex; justify-content: space-between; align-items: center; gap: 16px;
+  max-width: 1180px; margin: 0 auto; padding: 22px 24px;
+  font-family: var(--display); font-size: 16px;
+}
+.top .me { font-weight: 700; color: var(--ink); text-decoration: none; letter-spacing: -.01em; }
+.top nav { display: flex; gap: 22px; flex-wrap: wrap; }
+.top nav a { color: var(--slate); text-decoration: none; }
+.top nav a:hover { color: var(--ink); }
+.top nav a.resume { color: var(--cite); font-weight: 500; }
 
-  /* HERO */
-  header { padding: 84px 0 56px; }
-  .eyebrow { font-family: var(--mono); font-size: 13px; color: var(--teal); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 18px; }
-  h1 { font-family: var(--display); font-weight: 600; font-size: clamp(34px, 5.5vw, 54px); line-height: 1.12; letter-spacing: -0.02em; max-width: 780px; }
-  h1 .hl { color: var(--teal); }
-  .hero-sub { margin-top: 22px; font-size: 17px; color: var(--muted); max-width: 640px; }
-  .hero-cta { margin-top: 30px; display: flex; gap: 14px; flex-wrap: wrap; }
-  .btn { display: inline-block; text-decoration: none; font-weight: 500; font-size: 15px; padding: 12px 22px; border-radius: 8px; transition: transform 0.15s ease; }
-  .btn:hover { transform: translateY(-1px); }
-  .btn-primary { background: var(--teal); color: #fff; }
-  .btn-ghost { border: 1.5px solid var(--line); color: var(--ink); background: var(--card); }
+/* ---------- hero: the AI answer ---------- */
+.hero { max-width: 1180px; margin: 0 auto; padding: 28px 24px 72px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 56px; align-items: start; }
+.hero-intro { padding-top: 8px; }
+.hero h1 {
+  font-family: var(--display); font-weight: 800; letter-spacing: -.035em;
+  font-size: clamp(40px, 5vw, 66px); line-height: 1; margin: 0 0 20px; max-width: 12ch;
+}
+.hero .lede { font-size: 19px; color: var(--slate); max-width: 46ch; margin: 0; }
 
-  /* KPI STRIP */
-  .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; margin: 56px 0 0; }
-  .kpi { background: var(--card); padding: 26px 24px; }
-  .kpi-num { font-family: var(--mono); font-size: 30px; font-weight: 500; color: var(--ink); }
-  .kpi-num span { color: var(--amber); }
-  .kpi-label { font-size: 13px; color: var(--muted); margin-top: 6px; }
+.answerbox {
+  background: var(--sheet); border: 1px solid var(--line); border-radius: 22px;
+  box-shadow: 0 1px 0 var(--line), 0 24px 60px -36px rgba(22,33,58,.45);
+  max-width: 820px; overflow: hidden;
+}
+.ask {
+  display: flex; align-items: center; gap: 14px; padding: 20px 24px;
+  border-bottom: 1px solid var(--line); font-family: var(--display); font-size: 19px; font-weight: 500;
+}
+.ask svg { flex: none; color: var(--slate); }
+.ask #q { min-height: 1.4em; }
+.caret { display: inline-block; width: 2px; height: 1.1em; background: var(--ink); vertical-align: -3px; margin-left: 2px; animation: blink 1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+.reply { padding: 22px 24px 8px; min-height: 196px; }
+.reply p { margin: 0 0 12px; font-size: 18.5px; }
+.sup {
+  display: inline-flex; align-items: center; justify-content: center; min-width: 1.45em; height: 1.45em;
+  padding: 0 .3em; margin: 0 .1em; border-radius: 6px; background: var(--cite-soft); color: var(--cite);
+  font: 600 12.5px/1 var(--display); text-decoration: none; vertical-align: 2px;
+}
+.sup:hover { background: var(--cite); color: #fff; }
+.sources { display: none; padding: 4px 24px 22px; gap: 10px; flex-wrap: wrap; }
+.sources.show { display: flex; }
+.src {
+  display: flex; gap: 10px; align-items: center; text-decoration: none; color: var(--ink);
+  border: 1px solid var(--line); border-radius: 12px; padding: 8px 12px 8px 8px;
+  font: 500 14.5px/1.3 var(--display); background: var(--paper);
+}
+.src:hover { border-color: var(--cite); }
+.src .sup { margin: 0; vertical-align: 0; }
+.tryrow { margin-top: 22px; max-width: 820px; }
+.tryrow p { font: 500 15px var(--display); color: var(--slate); margin: 0 0 10px; }
+.chips { display: flex; flex-wrap: wrap; gap: 10px; }
+.chip {
+  font: 500 15.5px/1.3 var(--display); color: var(--ink); background: transparent; cursor: pointer;
+  border: 1.5px solid var(--ink); border-radius: 999px; padding: 9px 16px; text-align: left;
+}
+.chip:hover { background: var(--ink); color: var(--paper); }
+.chip[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
 
-  /* SECTIONS */
-  section { padding: 72px 0 8px; }
-  .sec-head { display: flex; align-items: baseline; gap: 16px; margin-bottom: 34px; }
-  .sec-head h2 { font-family: var(--display); font-weight: 600; font-size: 27px; letter-spacing: -0.01em; }
-  .sec-head .count { font-family: var(--mono); font-size: 14px; color: var(--muted); }
+/* ---------- sections ---------- */
+section.block { border-top: 1px solid var(--line); }
+.wrap { max-width: 1180px; margin: 0 auto; padding: 80px 24px; }
+.case-head { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 40px; margin-bottom: 36px; }
+.case-head .ref { font: 500 15px/1.5 var(--display); color: var(--slate); }
+.case-head .ref .sup { margin-left: 0; margin-right: 6px; }
+h2 {
+  font-family: var(--display); font-weight: 800; letter-spacing: -.03em;
+  font-size: clamp(32px, 4.2vw, 52px); line-height: 1.02; margin: 0 0 14px;
+}
+h3 { font-family: var(--display); font-weight: 700; letter-spacing: -.015em; font-size: 23px; line-height: 1.2; margin: 0 0 8px; }
+.prose { max-width: 64ch; }
+.prose p { margin: 0 0 18px; }
+.body-grid { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 40px; }
+.body-grid > aside { font: 400 15px/1.55 var(--display); color: var(--slate); }
+.body-grid > aside dl { margin: 0; }
+.body-grid > aside dt { color: var(--ink); font-weight: 500; margin-top: 14px; }
+.body-grid > aside dd { margin: 2px 0 0; }
 
-  /* PROJECT CARDS */
-  .projects { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 22px; }
-  .proj { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 28px; display: flex; flex-direction: column; transition: border-color 0.2s, transform 0.15s; }
-  .proj:hover { border-color: var(--teal); transform: translateY(-2px); }
-  .proj-metric { font-family: var(--mono); font-size: 34px; font-weight: 500; color: var(--teal); letter-spacing: -0.01em; }
-  .proj-metric-label { font-size: 13px; color: var(--muted); margin-top: 2px; margin-bottom: 18px; }
-  .proj h3 { font-family: var(--display); font-size: 19px; font-weight: 600; margin-bottom: 10px; }
-  .proj p { font-size: 14.5px; color: var(--muted); flex: 1; }
-  .proj-tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 16px 0 18px; }
-  .tag { font-family: var(--mono); font-size: 11.5px; background: var(--teal-soft); color: var(--teal); padding: 4px 10px; border-radius: 20px; }
-  .tag.cdf { background: #FBF1E2; color: var(--amber); }
-  .proj a { color: var(--teal); font-weight: 500; font-size: 14px; text-decoration: none; }
-  .proj a:hover { text-decoration: underline; }
+/* platform switcher */
+.switcher { margin: 34px 0 40px; background: var(--sheet); border: 1px solid var(--line); border-radius: 18px; overflow: hidden; max-width: 760px; }
+.switcher .qline { padding: 16px 20px; border-bottom: 1px solid var(--line); font: 500 16px/1.4 var(--display); color: var(--slate); }
+.switcher .qline b { color: var(--ink); font-weight: 500; }
+.tabs { display: flex; gap: 0; border-bottom: 1px solid var(--line); overflow-x: auto; }
+.tab {
+  flex: 1 0 auto; font: 500 15.5px var(--display); color: var(--slate); background: none; border: 0;
+  padding: 13px 18px; cursor: pointer; border-bottom: 3px solid transparent;
+}
+.tab[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--cite); }
+.panel { padding: 20px; min-height: 150px; }
+.panel .verdict { font: 700 26px/1.15 var(--display); letter-spacing: -.02em; margin: 0 0 8px; }
+.panel p { margin: 0; font-size: 17px; color: var(--ink); }
+.panel s { text-decoration-color: #C2410C; text-decoration-thickness: 2px; color: var(--slate); }
 
-  /* SKILLS */
-  .skill-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; }
-  .skill-block { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 22px 24px; }
-  .skill-block h4 { font-family: var(--display); font-size: 15px; font-weight: 600; margin-bottom: 10px; color: var(--teal); }
-  .skill-block p { font-size: 14px; color: var(--muted); }
+/* bar comparison */
+.bars { margin: 10px 0 34px; max-width: 640px; }
+.bar { display: grid; grid-template-columns: 210px 1fr 64px; gap: 14px; align-items: center; margin: 10px 0; font: 500 15.5px var(--display); }
+.bar .track { height: 18px; background: #E7E9EE; box-shadow: inset 0 0 0 1px var(--line); border-radius: 4px; overflow: hidden; }
+.bar .track, .bar .fill { display: block; }
+.bar .fill { height: 100%; background: var(--ink); }
+.bar .n { text-align: right; font-weight: 700; font-variant-numeric: tabular-nums; }
 
-  /* EXPERIENCE */
-  .xp { border-left: 2px solid var(--line); padding-left: 28px; }
-  .xp-item { margin-bottom: 36px; position: relative; }
-  .xp-item::before { content: ''; position: absolute; left: -34.5px; top: 7px; width: 11px; height: 11px; border-radius: 50%; background: var(--teal); }
-  .xp-title { font-family: var(--display); font-weight: 600; font-size: 17px; }
-  .xp-meta { font-family: var(--mono); font-size: 13px; color: var(--muted); margin: 3px 0 10px; }
-  .xp-item ul { padding-left: 18px; }
-  .xp-item li { font-size: 14.5px; color: var(--muted); margin-bottom: 6px; }
+/* reasons */
+.reasons { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; margin: 8px 0 40px; }
+.reason h3 { font-size: 21px; }
+.reason p { margin: 0; font-size: 16.5px; color: var(--ink); }
+.reason .tag { display: block; font: 500 14px var(--display); color: var(--cite); margin-bottom: 6px; }
 
-  /* FOOTER */
-  footer { margin-top: 80px; background: var(--ink); color: #E9EDEB; padding: 60px 0; }
-  footer h2 { font-family: var(--display); font-size: 30px; font-weight: 600; margin-bottom: 14px; }
-  footer p { color: #9FAAA5; max-width: 520px; }
-  .foot-links { margin-top: 26px; display: flex; gap: 16px; flex-wrap: wrap; }
-  .foot-links a { color: #E9EDEB; border: 1px solid #3A4642; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-size: 14.5px; }
-  .foot-links a:hover { border-color: var(--amber); color: #fff; }
-  .foot-note { margin-top: 44px; font-family: var(--mono); font-size: 12.5px; color: #6B7772; }
+/* outreach status */
+.funnel { display: flex; flex-wrap: wrap; gap: 0; margin: 18px 0 8px; max-width: 760px; border: 1px solid var(--line); border-radius: 16px; background: var(--sheet); overflow: hidden; }
+.step { flex: 1 1 150px; padding: 16px 18px; border-right: 1px solid var(--line); box-shadow: 0 1px 0 var(--line); font-family: var(--display); }
+.step:last-child { border-right: 0; }
+.step .k { font-size: 14.5px; color: var(--slate); }
+.step .v { font-size: 30px; font-weight: 700; letter-spacing: -.02em; }
+.step.wait .v { color: var(--slate); font-size: 19px; font-weight: 500; padding-top: 9px; }
+.small { font: 400 15px/1.55 var(--display); color: var(--slate); }
 
-  @media (max-width: 640px) {
-    .nav-links { display: none; }
-    header { padding: 56px 0 40px; }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior: auto; }
-    .btn:hover, .proj:hover { transform: none; }
-  }
+/* experiments */
+.exp { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border-top: 1px solid var(--line); }
+.exp > div { padding: 26px 0; border-bottom: 1px solid var(--line); }
+.exp > div:nth-child(odd) { padding-right: 32px; }
+.exp > div:nth-child(even) { padding-left: 32px; border-left: 1px solid var(--line); }
+.exp .result { font: 700 20px/1.3 var(--display); letter-spacing: -.01em; margin: 0 0 6px; }
+.exp .decision { margin: 0; font-size: 16.5px; }
+.exp .where { font: 400 14.5px var(--display); color: var(--slate); margin: 0 0 6px; }
+
+/* more work list */
+.more { list-style: none; padding: 0; margin: 0; max-width: 820px; }
+.more li { display: grid; grid-template-columns: 1fr auto; gap: 20px; padding: 16px 0; border-bottom: 1px solid var(--line); align-items: baseline; }
+.more li span { font: 400 16px/1.5 var(--display); color: var(--slate); }
+.more li b { font: 700 18px var(--display); color: var(--ink); display: block; }
+.more a { font: 500 15px var(--display); white-space: nowrap; }
+
+/* contact */
+.contact { background: var(--ink); color: var(--paper); }
+.contact h2 { color: #fff; max-width: 16ch; }
+.contact p { color: #C8CEDB; max-width: 56ch; }
+.contact a { color: #fff; }
+.links { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+.links a {
+  font: 500 17px var(--display); text-decoration: none; border: 1.5px solid #fff; border-radius: 999px; padding: 11px 20px;
+}
+.links a:hover { background: #fff; color: var(--ink); }
+footer { background: var(--ink); color: #8F98AD; font: 400 14px var(--display); text-align: left; }
+footer .wrap { padding: 0 24px 40px; }
+
+@media (max-width: 960px) {
+  .hero { grid-template-columns: 1fr; gap: 32px; }
+}
+@media (max-width: 860px) {
+  .case-head, .body-grid { grid-template-columns: minmax(0, 1fr); gap: 14px; }
+  .reasons { grid-template-columns: 1fr; gap: 24px; }
+  .exp { grid-template-columns: 1fr; }
+  .exp > div:nth-child(odd), .exp > div:nth-child(even) { padding: 22px 0; border-left: 0; }
+  .bar { grid-template-columns: 1fr 64px; }
+  .bar .track { grid-column: 1 / -1; grid-row: 2; }
+  .wrap { padding: 60px 20px; }
+  .top nav { gap: 14px; font-size: 15px; }
+  .more li { grid-template-columns: 1fr; gap: 6px; }
+}
+@media (max-width: 520px) {
+  body { font-size: 17px; }
+  .top { flex-direction: column; align-items: flex-start; }
+  .reply { min-height: 260px; }
+}
 </style>
 </head>
 <body>
 
-<nav>
-  <div class="nav-inner">
-    <div class="nav-name">Lakshmi Maradana</div>
-    <div class="nav-links">
-      <a href="#projects">Projects</a>
-      <a href="#skills">Skills</a>
-      <a href="#experience">Experience</a>
-      <a href="#contact">Contact</a>
-    </div>
-  </div>
-</nav>
-
-<header class="wrap">
-  <div class="eyebrow">Marketing Analyst · Devon, PA</div>
-  <h1>I find the story in customer data — and turn it into <span class="hl">revenue decisions</span>.</h1>
-  <p class="hero-sub">Marketing analyst with an M.S. in Computer Science from Villanova University. I build end-to-end analyses across churn, A/B testing, attribution, segmentation, and sentiment — always leading with the number that matters to the business.</p>
-  <div class="hero-cta">
-    <a class="btn btn-primary" href="#projects">See my work</a>
-    <a class="btn btn-ghost" href="https://github.com/lakshmimaradana" target="_blank" rel="noopener">GitHub profile</a>
-  </div>
-
-  <div class="kpis">
-    <div class="kpi">
-      <div class="kpi-num"><span>$</span>3.8M+</div>
-      <div class="kpi-label">Revenue opportunities identified across projects</div>
-    </div>
-    <div class="kpi">
-      <div class="kpi-num">300K<span>+</span></div>
-      <div class="kpi-label">User records analyzed with statistical rigor</div>
-    </div>
-    <div class="kpi">
-      <div class="kpi-num">6</div>
-      <div class="kpi-label">End-to-end analytics projects, all on GitHub</div>
-    </div>
-    <div class="kpi">
-      <div class="kpi-num">5</div>
-      <div class="kpi-label">Attribution models built and compared</div>
-    </div>
-  </div>
+<header class="top">
+  <a class="me" href="#">Lakshmi Tulasi Maradana</a>
+  <nav aria-label="Main">
+    <a href="#wedding">AI search work</a>
+    <a href="#tests">Experiments</a>
+    <a href="#more">More projects</a>
+    <a href="#contact">Contact</a>
+    <a class="resume" href="Lakshmi_Maradana_Resume_GTM.pdf">Resume (PDF)</a>
+  </nav>
 </header>
 
-<section id="projects" class="wrap">
-  <div class="sec-head"><h2>Projects</h2><span class="count">06 — metric first, always</span></div>
-  <div class="projects">
+<main>
+<section class="hero" aria-labelledby="hello">
+  <div class="hero-intro">
+  <h1 id="hello">When people ask AI who to hire, I find out who gets left out.</h1>
+  <p class="lede">I work on go-to-market and AI search. I check how ChatGPT, Perplexity, Google AI Mode and Claude answer the questions customers ask, figure out why good businesses get skipped, and reach out to them with what I found. M.S. in Computer Science, Villanova. Based in Devon, PA.</p>
+  </div>
+  <div class="hero-demo">
 
-    <div class="proj">
-      <div class="proj-metric">$1.67M</div>
-      <div class="proj-metric-label">annual revenue at risk identified</div>
-      <h3>Customer Churn Analysis Dashboard</h3>
-      <p>Analyzed 7,043 telecom customers, found a 975-customer segment churning at 68%, and built an interactive dashboard with KPI cards and retention recommendations.</p>
-      <div class="proj-tags"><span class="tag">Python</span><span class="tag">SQL</span><span class="tag">Plotly Dash</span><span class="tag">Pandas</span></div>
-      <a href="https://github.com/lakshmimaradana/customer-churn-analysis" target="_blank" rel="noopener">View on GitHub →</a>
+  <div class="answerbox">
+    <div class="ask">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M20 20l-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <span id="q" aria-live="polite"></span><span class="caret" aria-hidden="true"></span>
     </div>
+    <div class="reply" id="reply" aria-live="polite"></div>
+    <div class="sources" id="sources" aria-label="Sources for this answer"></div>
+  </div>
 
-    <div class="proj">
-      <div class="proj-metric">+21.9%</div>
-      <div class="proj-metric-label">conversion lift proven at 99.9% confidence</div>
-      <h3>Email Campaign A/B Test</h3>
-      <p>Evaluated a 9,500-user email test with z-tests. The new campaign's lift projects $2.1M in additional annual revenue at full rollout.</p>
-      <div class="proj-tags"><span class="tag">SciPy</span><span class="tag">StatsModels</span><span class="tag">Hypothesis Testing</span></div>
-      <a href="https://github.com/lakshmimaradana/ab-test-analysis" target="_blank" rel="noopener">View on GitHub →</a>
-    </div>
-
-    <div class="proj">
-      <div class="proj-metric">5.0x</div>
-      <div class="proj-metric-label">ROAS at the winning discount level</div>
-      <h3>Amazon BTP Discount A/B Test</h3>
-      <p>Compared 10% vs 15% Brand Tailored Promotions discounts on Amazon Seller Central — the 15% level drove 22% more GMV and 31% more conversions (p &lt; 0.001).</p>
-      <div class="proj-tags"><span class="tag cdf">CDF Internship</span><span class="tag">Amazon Seller Central</span><span class="tag">ROAS</span></div>
-      <a href="https://github.com/lakshmimaradana/amazon-btp-analysis" target="_blank" rel="noopener">View on GitHub →</a>
-    </div>
-
-    <div class="proj">
-      <div class="proj-metric">290K+</div>
-      <div class="proj-metric-label">user records analyzed — costly rollout prevented</div>
-      <h3>Landing Page A/B Test Analysis</h3>
-      <p>Applied t-tests, chi-squared tests, and confidence intervals to a landing page experiment. The redesign wasn't significant (p = 0.19) — the honest recommendation saved the switch.</p>
-      <div class="proj-tags"><span class="tag cdf">CDF Internship</span><span class="tag">T-Test</span><span class="tag">Chi-Squared</span><span class="tag">Confidence Intervals</span></div>
-      <a href="https://github.com/lakshmimaradana/cdf-ab-test-analysis" target="_blank" rel="noopener">View on GitHub →</a>
-    </div>
-
-    <div class="proj">
-      <div class="proj-metric">5 models</div>
-      <div class="proj-metric-label">attribution frameworks compared on 1,000 journeys</div>
-      <h3>Marketing Channel Attribution</h3>
-      <p>Modeled customer journeys across 5 channels under first-touch, last-touch, linear, time-decay, and position-based attribution — producing a data-driven $50K budget allocation.</p>
-      <div class="proj-tags"><span class="tag cdf">CDF Internship</span><span class="tag">Attribution</span><span class="tag">Budget Modeling</span></div>
-      <a href="https://github.com/lakshmimaradana/marketing-attribution-model" target="_blank" rel="noopener">View on GitHub →</a>
-    </div>
-
-    <div class="proj">
-      <div class="proj-metric">71%</div>
-      <div class="proj-metric-label">VADER accuracy benchmarked vs human labels</div>
-      <h3>Social Media Sentiment Analysis</h3>
-      <p>Classified sentiment across 10,000 tweets with NLP (47% positive / 26% negative), and surfaced the exact words driving brand love and complaints through word clouds.</p>
-      <div class="proj-tags"><span class="tag">NLP</span><span class="tag">VADER</span><span class="tag">WordCloud</span></div>
-      <a href="https://github.com/lakshmimaradana/social-media-sentiment-analysis" target="_blank" rel="noopener">View on GitHub →</a>
-    </div>
-
+  <div class="tryrow">
+    <p>Ask a different question</p>
+    <div class="chips" id="chips"></div>
+  </div>
   </div>
 </section>
 
-<section id="skills" class="wrap">
-  <div class="sec-head"><h2>Skills</h2><span class="count">tools I've actually shipped with</span></div>
-  <div class="skill-grid">
-    <div class="skill-block">
-      <h4>Programming &amp; Data</h4>
-      <p>Python (Pandas, NumPy), SQL, Jupyter, Git &amp; GitHub, Excel</p>
-    </div>
-    <div class="skill-block">
-      <h4>Statistics &amp; Testing</h4>
-      <p>A/B testing, t-tests, chi-squared, confidence intervals, SciPy, StatsModels</p>
-    </div>
-    <div class="skill-block">
-      <h4>Machine Learning &amp; NLP</h4>
-      <p>K-Means clustering, scikit-learn, RFM analysis, VADER sentiment analysis</p>
-    </div>
-    <div class="skill-block">
-      <h4>Marketing Analytics</h4>
-      <p>Attribution modeling, ROAS &amp; GMV, churn &amp; cohort analysis, segmentation, Amazon Seller Central, Looker Studio, Plotly Dash</p>
-    </div>
-  </div>
-</section>
-
-<section id="experience" class="wrap">
-  <div class="sec-head"><h2>Experience</h2></div>
-  <div class="xp">
-    <div class="xp-item">
-      <div class="xp-title">Data Analyst Intern — Community Dreams Foundation</div>
-      <div class="xp-meta">Apr 2026 – Present</div>
-      <ul>
-        <li>Ran an Amazon BTP discount A/B test that identified the 15% discount as driving 22% more GMV at 5.0x ROAS.</li>
-        <li>Analyzed a 290K+ user landing page experiment; prevented rollout of a statistically insignificant redesign.</li>
-        <li>Designed a multi-touch attribution framework and built a Looker Studio dashboard for GMV and ROAS tracking.</li>
-      </ul>
-    </div>
-    <div class="xp-item">
-      <div class="xp-title">Collections &amp; Stewardship Technician — Falvey Library, Villanova University</div>
-      <div class="xp-meta">Jun 2024 – Dec 2025</div>
-      <ul>
-        <li>Maintained cataloging and acquisitions databases with high data integrity across large collections.</li>
-        <li>Produced digital content for the Digital Library and verified shipments against invoices.</li>
-      </ul>
-    </div>
-    <div class="xp-item">
-      <div class="xp-title">M.S. Computer Science — Villanova University</div>
-      <div class="xp-meta">Aug 2023 – Dec 2025</div>
-    </div>
-  </div>
-</section>
-
-<footer id="contact">
+<!-- Case 1 -->
+<section class="block" id="wedding">
   <div class="wrap">
-    <h2>Let's talk data.</h2>
-    <p>I'm actively seeking full-time Marketing Analyst roles — open to remote, hybrid, or on-site. If you're hiring someone who leads with the business number, I'd love to connect.</p>
-    <div class="foot-links">
-      <a href="https://www.linkedin.com/in/lakshmitulasimaradana" target="_blank" rel="noopener">LinkedIn</a>
-      <a href="https://github.com/lakshmimaradana" target="_blank" rel="noopener">GitHub</a>
-      <a href="mailto:lakshmitulasimaradana@gmail.com">Email me</a>
+    <div class="case-head">
+      <div class="ref"><a class="sup" href="#wedding">1</a>Wedding vendors on the Main Line<br>November 2026</div>
+      <div>
+        <h2>Same question, four AI tools, four different stories</h2>
+        <div class="prose"><p>Couples now ask AI assistants who to hire for their wedding. I wanted to know which small vendors with great reviews were getting left out, and why. So I built a Python tool that asks Claude the questions couples ask, 5 times each, and records who gets named, in what order and from which websites. Then I asked ChatGPT, Perplexity and Google AI Mode the same questions by hand.</p></div>
+      </div>
     </div>
-    <div class="foot-note">Lakshmi Tulasi Maradana · Devon, PA · Built with data, deployed with intent.</div>
-  </div>
-</footer>
 
+    <div class="body-grid">
+      <aside>
+        <dl>
+          <dt>Tools</dt><dd>Python, Claude Code with web search, hand checks in ChatGPT, Perplexity and Google AI Mode</dd>
+          <dt>Businesses</dt><dd>5 wedding vendors with 4.5+ stars on Google. Names kept private until they agree to be a case study.</dd>
+          <dt>Code</dt><dd>Private repo for now; happy to walk through it.</dd>
+        </dl>
+      </aside>
+      <div>
+        <div class="prose"><p>The biggest surprise came from comparing platforms. Here's one décor company and the question <em>who should decorate a wedding at a historic mansion venue nearby?</em></p></div>
+
+        <div class="switcher">
+          <div class="qline">Question: <b>Who should I hire for décor at this mansion venue?</b></div>
+          <div class="tabs" role="tablist" aria-label="AI tool">
+            <button class="tab" role="tab" aria-selected="true" aria-controls="pnl" id="t-claude" data-k="claude">Claude</button>
+            <button class="tab" role="tab" aria-selected="false" aria-controls="pnl" id="t-perplexity" data-k="perplexity">Perplexity</button>
+            <button class="tab" role="tab" aria-selected="false" aria-controls="pnl" id="t-google" data-k="google">Google AI Mode</button>
+            <button class="tab" role="tab" aria-selected="false" aria-controls="pnl" id="t-chatgpt" data-k="chatgpt">ChatGPT</button>
+          </div>
+          <div class="panel" id="pnl" role="tabpanel" aria-labelledby="t-claude"></div>
+        </div>
+
+        <div class="prose"><p>If I had only checked Claude, I would have told this business it had a visibility problem. It doesn't. It's the top pick on three tools, and the real risk is that its credit is split between two names. That changed my message from "let me fix this" to "let me help you keep your spot."</p>
+        <p>Across the planner questions, Claude leaned almost entirely on wedding directories:</p></div>
+
+        <div class="bars" role="img" aria-label="Zola appeared in 50 of 50 Claude answers; the planners' own websites appeared in 0 of 50.">
+          <div class="bar"><span>Zola cited</span><span class="track"><span class="fill" style="width:100%"></span></span><span class="n">50 / 50</span></div>
+          <div class="bar"><span>Planners' own websites cited</span><span class="track"><span class="fill" style="width:0%"></span></span><span class="n">0 / 50</span></div>
+        </div>
+
+        <h3>Three reasons good businesses go missing</h3>
+        <p class="small" style="margin:0 0 18px">A single visibility score would hide all three. Each one needs a different fix.</p>
+        <div class="reasons">
+          <div class="reason"><h3>An old name</h3><p>The décor company: Claude used its old business name in 13 of 15 answers, and the venue's own gallery credits it under three different names.</p></div>
+          <div class="reason"><h3>The wrong town</h3><p>A florist and event company: its WeddingWire listing has 13 reviews but says Ardmore, with a King of Prussia address. An AI grader refused to count those reviews.</p></div>
+          <div class="reason"><h3>The wrong service</h3><p>The same florist was named in 5 of 5 Claude florist answers and Perplexity's top florist pick, but in 0 of 10 planner answers, even though it plans full events.</p></div>
+        </div>
+
+        <h3>What I did with it</h3>
+        <div class="prose"><p>I compared my approach with BrightLocal, Profound and HubSpot's free AI Search Grader. They give a score; none of them showed the florist was missing only for planner questions. Then I wrote to the two businesses, leading with the one finding that mattered most to each, and offered the report for free.</p></div>
+        <div class="funnel" aria-label="Outreach status">
+          <div class="step"><div class="k">Messages sent</div><div class="v">2</div></div>
+          <div class="step"><div class="k">Channels</div><div class="v" style="font-size:19px;font-weight:500;padding-top:9px">Email, Instagram</div></div>
+          <div class="step wait"><div class="k">Replies</div><div class="v">Waiting (sent Nov 18)</div></div>
+        </div>
+        <p class="small">I'll update this when they answer, including if they don't.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Case 2 -->
+<section class="block" id="restaurant">
+  <div class="wrap">
+    <div class="case-head">
+      <div class="ref"><a class="sup" href="#restaurant">2</a>Chinese Delight, Wayne, PA<br>November 2026</div>
+      <div>
+        <h2>Named in every answer, but with old prices</h2>
+        <div class="prose"><p>I wrote 10 questions real customers would ask about a local restaurant and ran 16 checks across ChatGPT, Gemini, Perplexity and Google. The restaurant showed up every time. That sounds like good news, but the answers gave <mark>prices from 2023</mark> and <mark>unsure opening hours</mark>, and one told people to skip it or settle.</p></div>
+      </div>
+    </div>
+    <div class="body-grid">
+      <aside><dl><dt>Delivered</dt><dd>9-item fix list ranked by effort, FAQ copy written for AI answers, Restaurant schema markup (JSON-LD)</dd></dl></aside>
+      <div class="prose">
+        <p>I traced each wrong answer back to where it came from: unclaimed menu listings last updated in 2023, and the restaurant's name spelled differently across 6+ directories. One Perplexity answer leaned on Yelp twice, once directly and once through MapQuest.</p>
+        <p>I compared its reviews with its strongest local competitor (66 vs. 439 on Yelp) and found a selling point no listing mentioned: it's BYOB.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Experiments -->
+<section class="block" id="tests">
+  <div class="wrap">
+    <div class="case-head">
+      <div class="ref"><a class="sup" href="#tests">3</a>Data Analyst Intern, Community Dreams Foundation<br>April 2026 to now</div>
+      <div>
+        <h2>Experiments, including the one where the answer was no</h2>
+        <div class="prose"><p>Most of my internship is A/B testing for e-commerce promotions and landing pages. The useful part isn't the math, it's the decision that comes after.</p></div>
+      </div>
+    </div>
+    <div class="exp">
+      <div>
+        <p class="where">Amazon Brand Tailored Promotions, 10% vs. 15% off</p>
+        <p class="result">+22% GMV, +31% conversions, 5.0x ROAS (p &lt; 0.001)</p>
+        <p class="decision">15% became the standard discount. <a href="https://github.com/lakshmimaradana/amazon-btp-analysis">Analysis on GitHub</a></p>
+      </div>
+      <div>
+        <p class="where">Landing page redesign, 290,000 users</p>
+        <p class="result">Lift wasn't significant (p = 0.19)</p>
+        <p class="decision">I recommended not switching, so the team skipped a rollout that wouldn't have paid off. <a href="https://github.com/lakshmimaradana/cdf-ab-test-analysis">Analysis on GitHub</a></p>
+      </div>
+      <div>
+        <p class="where">Channel attribution, 1,000 customer journeys, 5 channels</p>
+        <p class="result">Compared 5 attribution models to split a $50K budget</p>
+        <p class="decision">Facebook ads start the journey; email closes it. Built a Looker Studio dashboard to track GMV, ROAS and discounts. <a href="https://github.com/lakshmimaradana/marketing-attribution-model">Model on GitHub</a></p>
+      </div>
+      <div>
+        <p class="where">Email campaign test, 9,500 users (personal project)</p>
+        <p class="result">+21.9% conversion lift at 99.9% confidence</p>
+        <p class="decision">Z-tests in SciPy and StatsModels. <a href="https://github.com/lakshmimaradana/ab-test-analysis">Analysis on GitHub</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Tools -->
+<section class="block" id="build">
+  <div class="wrap">
+    <div class="case-head">
+      <div class="ref"><a class="sup" href="#build">4</a>Python, FastMCP, YouTube APIs, OAuth<br>September 2026</div>
+      <div>
+        <h2>I build the tools I use</h2>
+        <div class="prose">
+          <p>I built an MCP server with 7 tools that lets Claude pull live data from YouTube: video stats, retention curves, traffic sources and top countries. It runs two channels from one codebase.</p>
+          <p>Day to day I work in Python, SQL, Excel, Looker Studio and Tableau, and I use Claude Code to automate the repetitive parts of research, like asking the same questions over and over and scoring every answer.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- More -->
+<section class="block" id="more">
+  <div class="wrap">
+    <h2 style="margin-bottom:24px">More projects</h2>
+    <ul class="more">
+      <li><div><b>Customer churn analysis</b><span>Found a 975-customer segment churning at 68% in 7,043 telecom records. Python, SQL, Plotly Dash.</span></div><a href="https://github.com/lakshmimaradana/customer-churn-analysis">GitHub</a></li>
+      <li><div><b>Customer segmentation</b><span>RFM analysis and K-Means clustering in Python.</span></div><a href="https://github.com/lakshmimaradana/customer-segmentation">GitHub</a></li>
+      <li><div><b>Marketing mix model</b><span>Regression model measuring channel ROI to guide budget allocation.</span></div><a href="https://github.com/lakshmimaradana/marketing-mix-model">GitHub</a></li>
+      <li><div><b>Social media sentiment</b><span>10,000 tweets classified with VADER (47% positive, 26% negative), 71% accurate against human labels.</span></div><a href="https://github.com/lakshmimaradana/social-media-sentiment-analysis">GitHub</a></li>
+    </ul>
+  </div>
+</section>
+</main>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <h2>Looking for a GTM analyst or GTM engineer role</h2>
+    <p>I'm open to remote, hybrid or on-site roles, and to relocating. If you're working on go-to-market or AI search, I'd like to hear about it.</p>
+    <div class="links">
+      <a href="mailto:lakshmitulasimaradana@gmail.com">Email me</a>
+      <a href="https://www.linkedin.com/in/lakshmitulasimaradana">LinkedIn</a>
+      <a href="https://github.com/lakshmimaradana">GitHub</a>
+      <a href="Lakshmi_Maradana_Resume_GTM.pdf">Resume (PDF)</a>
+    </div>
+  </div>
+</section>
+<footer><div class="wrap">This page includes Person schema markup, because I'd be a bad AI search analyst if it didn't.</div></footer>
+
+<script>
+(function () {
+  var QA = [
+    {
+      q: "Who can find out why AI tools skip a good local business?",
+      a: [
+        "Lakshmi Tulasi Maradana is a strong fit. She built a Python tool that asks Claude the questions customers ask, 5 times each, and checked ChatGPT, Perplexity and Google AI Mode by hand.",
+        { t: "She found a décor company Claude kept calling by its old name, and a florist whose 13 reviews were filed under the wrong town.", c: [1] },
+        { t: "She also audited a restaurant that every AI tool named, but with 2023 prices.", c: [2] }
+      ]
+    },
+    {
+      q: "Who can run an A/B test and say no when the data says no?",
+      a: [
+        { t: "Lakshmi ran a 290,000-user landing page test at her internship. The lift wasn't significant (p = 0.19), so she recommended not switching.", c: [3] },
+        { t: "In another test, a 15% discount beat 10% by 22% in GMV and 31% in conversions, and it became the standard.", c: [3] }
+      ]
+    },
+    {
+      q: "Who can build GTM tools with Python and Claude Code?",
+      a: [
+        { t: "Lakshmi built an MCP server with 7 tools that lets Claude pull live YouTube data for two channels.", c: [4] },
+        { t: "Her AI visibility checker runs the same question many times, scores who gets named and which sources are cited, and feeds the findings into personal outreach.", c: [1] }
+      ]
+    },
+    {
+      q: "Who should a GTM team talk to about AEO and GEO?",
+      a: [
+        { t: "Lakshmi's work compares how four AI tools answer the same question. One company that looked unknown on Claude was the top pick on the other three.", c: [1] },
+        { t: "She traces wrong answers back to the listings behind them and writes fixes ranked by effort.", c: [2] },
+        "She also benchmarked her approach against BrightLocal, Profound and HubSpot's AI Search Grader."
+      ]
+    }
+  ];
+  var SRC = {
+    1: { label: "Same question, four AI tools", href: "#wedding" },
+    2: { label: "Named in every answer, with old prices", href: "#restaurant" },
+    3: { label: "Experiments at Community Dreams Foundation", href: "#tests" },
+    4: { label: "I build the tools I use", href: "#build" }
+  };
+
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var qEl = document.getElementById("q"), rEl = document.getElementById("reply"),
+      sEl = document.getElementById("sources"), chips = document.getElementById("chips");
+  var run = 0;
+
+  function sup(n) {
+    var a = document.createElement("a");
+    a.className = "sup"; a.href = SRC[n].href; a.textContent = n;
+    a.setAttribute("aria-label", "Source " + n + ": " + SRC[n].label);
+    return a;
+  }
+  function wait(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
+
+  async function show(i) {
+    var my = ++run, item = QA[i];
+    [].forEach.call(chips.children, function (c, j) { c.setAttribute("aria-pressed", j === i ? "true" : "false"); });
+    rEl.innerHTML = ""; sEl.innerHTML = ""; sEl.classList.remove("show"); qEl.textContent = "";
+    if (reduce) { qEl.textContent = item.q; }
+    else {
+      for (var k = 0; k < item.q.length; k++) { if (my !== run) return; qEl.textContent += item.q[k]; await wait(22); }
+      await wait(320);
+    }
+    var used = [];
+    var p = document.createElement("p"); rEl.appendChild(p);
+    for (var s = 0; s < item.a.length; s++) {
+      var part = item.a[s], text = typeof part === "string" ? part : part.t, cites = typeof part === "string" ? [] : part.c;
+      var span = document.createElement("span"); p.appendChild(span);
+      var words = (text + " ").split(/(\s+)/);
+      if (reduce) span.textContent = text + " ";
+      else for (var w = 0; w < words.length; w++) { if (my !== run) return; span.textContent += words[w]; if (words[w].trim()) await wait(28); }
+      cites.forEach(function (n) { p.insertBefore(sup(n), null); p.appendChild(document.createTextNode(" ")); if (used.indexOf(n) < 0) used.push(n); });
+    }
+    if (my !== run) return;
+    used.forEach(function (n) {
+      var a = document.createElement("a"); a.className = "src"; a.href = SRC[n].href;
+      var b = document.createElement("span"); b.className = "sup"; b.textContent = n;
+      a.appendChild(b); a.appendChild(document.createTextNode(SRC[n].label)); sEl.appendChild(a);
+    });
+    if (used.length) sEl.classList.add("show");
+  }
+
+  QA.forEach(function (item, i) {
+    var b = document.createElement("button");
+    b.className = "chip"; b.type = "button"; b.textContent = item.q; b.setAttribute("aria-pressed", "false");
+    b.addEventListener("click", function () { show(i); });
+    chips.appendChild(b);
+  });
+  show(0);
+
+  // platform switcher
+  var P = {
+    claude: { v: "Recommended, but mostly under its old name", d: "Claude recommended the company in 5 of 5 tries for this venue. But across its answers it used the <s>old business name</s> in 13 of 15, so the credit is split between two names." },
+    perplexity: { v: "#1 pick", d: "Perplexity named the company first, under its current name, and cited its own portfolio page, which lists each venue it has worked at." },
+    google: { v: "#1 pick", d: "Google AI Mode named the company first, but showed its business category as \"Wedding venue\", which isn't what it does." },
+    chatgpt: { v: "#1 pick", d: "ChatGPT named the company first for this venue." }
+  };
+  var tabs = document.querySelectorAll(".tab"), pnl = document.getElementById("pnl");
+  function pick(btn) {
+    tabs.forEach(function (t) { t.setAttribute("aria-selected", t === btn ? "true" : "false"); t.tabIndex = t === btn ? 0 : -1; });
+    var x = P[btn.dataset.k];
+    pnl.setAttribute("aria-labelledby", btn.id);
+    pnl.innerHTML = '<p class="verdict">' + x.v + "</p><p>" + x.d + "</p>";
+  }
+  tabs.forEach(function (t, i) {
+    t.addEventListener("click", function () { pick(t); });
+    t.addEventListener("keydown", function (e) {
+      var n = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
+      if (n) { var nx = tabs[(i + n + tabs.length) % tabs.length]; nx.focus(); pick(nx); }
+    });
+  });
+  pick(tabs[0]);
+})();
+</script>
 </body>
 </html>

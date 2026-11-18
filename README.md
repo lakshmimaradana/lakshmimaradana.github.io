@@ -1,9 +1,5 @@
-# Portfolio Website
+# lakshmimaradana.github.io
 
-My personal portfolio as a Marketing Analyst.
+My portfolio: go-to-market and AI search (AEO/GEO) work, experiments, and tools I've built.
 
-🔗 Live site: https://lakshmimaradana.github.io
-
-Built with HTML/CSS. Showcases 6 end-to-end marketing 
-analytics projects spanning A/B testing, churn analysis, 
-attribution modeling, customer segmentation, and NLP.
+Fonts: Bricolage Grotesque and Source Serif 4, both under the SIL Open Font License (see `fonts/`).
