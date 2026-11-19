@@ -11,7 +11,7 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://lakshmimaradana.github.io/">
 <link rel="canonical" href="https://lakshmimaradana.github.io/">
-<link rel="preload" href="fonts/bricolage.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="bricolage.woff2" as="font" type="font/woff2" crossorigin>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -28,9 +28,9 @@
 }
 </script>
 <style>
-@font-face { font-family: "Bricolage Grotesque"; src: url("fonts/bricolage.woff2") format("woff2"); font-weight: 200 800; font-display: swap; }
-@font-face { font-family: "Source Serif 4"; src: url("fonts/sourceserif.woff2") format("woff2"); font-weight: 200 900; font-display: swap; }
-@font-face { font-family: "Source Serif 4"; src: url("fonts/sourceserif-italic.woff2") format("woff2"); font-weight: 200 900; font-style: italic; font-display: swap; }
+@font-face { font-family: "Bricolage Grotesque"; src: url("bricolage.woff2") format("woff2"); font-weight: 200 800; font-display: swap; }
+@font-face { font-family: "Source Serif 4"; src: url("sourceserif.woff2") format("woff2"); font-weight: 200 900; font-display: swap; }
+@font-face { font-family: "Source Serif 4"; src: url("sourceserif-italic.woff2") format("woff2"); font-weight: 200 900; font-style: italic; font-display: swap; }
 :root {
   --paper: #F3F4F1;
   --sheet: #FFFFFF;
@@ -68,19 +68,68 @@ mark { background: linear-gradient(transparent 55%, var(--mark) 55%); color: inh
 .top nav a:hover { color: var(--ink); }
 .top nav a.resume { color: var(--cite); font-weight: 500; }
 
-/* ---------- hero: the AI answer ---------- */
-.hero { max-width: 1180px; margin: 0 auto; padding: 28px 24px 72px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 56px; align-items: start; }
-.hero-intro { padding-top: 8px; }
+/* ---------- hero ---------- */
+.hero { max-width: 1180px; margin: 0 auto; padding: 12px 24px 64px; }
+.hero-row { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 48px; align-items: end; margin-bottom: 26px; }
 .hero h1 {
   font-family: var(--display); font-weight: 800; letter-spacing: -.035em;
-  font-size: clamp(40px, 5vw, 66px); line-height: 1; margin: 0 0 20px; max-width: 12ch;
+  font-size: clamp(36px, 4.2vw, 54px); line-height: 1.02; margin: 0; max-width: 16ch;
 }
-.hero .lede { font-size: 19px; color: var(--slate); max-width: 46ch; margin: 0; }
+.hero .lede { font-size: 17px; line-height: 1.6; color: var(--slate); margin: 0; }
 
+/* ---------- answer map ---------- */
+.mapcard { background: var(--sheet); border: 1px solid var(--line); border-radius: 26px; padding: 22px 24px 18px;
+  box-shadow: 0 30px 70px -48px rgba(22,33,58,.55); }
+.maphint { font: 500 15px var(--display); color: var(--slate); margin: 0 0 12px; }
+.qtabs { display: flex; flex-wrap: wrap; gap: 10px; }
+.qtab { font: 500 15.5px/1.3 var(--display); color: var(--ink); background: var(--paper); cursor: pointer;
+  border: 1.5px solid var(--line); border-radius: 14px; padding: 10px 14px; text-align: left; }
+.qtab:hover { border-color: var(--ink); }
+.qtab[aria-selected="true"] { background: var(--ink); color: #fff; border-color: var(--ink); }
+.mapbody { display: grid; grid-template-columns: minmax(0, 1.75fr) minmax(0, 1fr); gap: 24px; margin-top: 18px; align-items: stretch; }
+.mapsvg svg { width: 100%; height: auto; display: block; overflow: visible; }
+.mappanel { background: var(--paper); border-radius: 18px; padding: 20px 22px; align-self: start; min-height: 220px; }
+.mappanel .pkick { font: 500 14px var(--display); color: var(--cite); margin: 0 0 6px; }
+.mappanel h3 { font-size: 24px; margin: 0 0 10px; }
+.mappanel p { font-size: 17px; margin: 0; }
+.mapnote { font: 400 13.5px/1.5 var(--display); color: var(--slate); margin: 14px 0 0; }
+.legend { display: flex; flex-wrap: wrap; gap: 16px; font: 500 13px var(--display); color: var(--slate); margin-top: 4px; }
+.legend i { display: inline-block; width: 11px; height: 11px; border-radius: 50%; margin-right: 6px; vertical-align: -1px; }
+.lg-top { background: var(--ink); } .lg-named { background: var(--cite); } .lg-miss { background: #C2410C; } .lg-none { background: #C9CDD6; }
+/* svg pieces */
+.node { cursor: pointer; outline: none; }
+.node .disc { fill: var(--paper); stroke: var(--ink); stroke-width: 2; transition: fill .2s, stroke-width .2s; }
+.node text { font-family: var(--display); fill: var(--ink); pointer-events: none; }
+.node:hover .disc, .node:focus-visible .disc { stroke-width: 3.5; }
+.tool.on .disc { fill: var(--st, var(--ink)); } .tool.on text.lbl { fill: #fff; }
+.node .disc { transition: stroke .4s, stroke-width .4s, fill .2s; }
+.src .chipbg { fill: #fff; stroke: var(--line); stroke-width: 1.5; transition: stroke .2s; }
+.src.used .chipbg { stroke: var(--ink); }
+.src.on .chipbg { fill: var(--cite-soft); stroke: var(--cite); }
+.src text { font: 500 12.5px var(--display); fill: #8A92A5; }
+.src.used text { fill: var(--ink); }
+.biz .bizbg { fill: var(--ink); }
+.biz text { fill: #fff; font: 700 15px var(--display); }
+.tally { font: 600 14px var(--display); fill: var(--ink); }
+.biz.on .bizbg { fill: var(--cite); }
+.wire { fill: none; stroke: var(--cite); stroke-width: 2; stroke-linecap: round; transition: opacity .25s; }
+.wire.down { stroke: #9AA2B4; stroke-width: 1.5; stroke-dasharray: 3 5; }
+.wire.dim { opacity: .1; }
+.badge rect { transition: opacity .3s; }
+.badge text { font: 700 12.5px var(--display); fill: #fff; }
+.badge.none text { fill: var(--slate); }
+.focusring { fill: none; stroke: var(--cite); stroke-width: 3; opacity: 0; }
+.node:focus-visible .focusring { opacity: 1; }
+
+/* ask me */
+.askwrap { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 48px; align-items: start; }
+.askwrap h2 { margin-bottom: 8px; }
+.askwrap .chips { margin-top: 20px; flex-direction: column; align-items: flex-start; }
+.askwrap .chip { border-radius: 16px; }
 .answerbox {
   background: var(--sheet); border: 1px solid var(--line); border-radius: 22px;
   box-shadow: 0 1px 0 var(--line), 0 24px 60px -36px rgba(22,33,58,.45);
-  max-width: 820px; overflow: hidden;
+  overflow: hidden;
 }
 .ask {
   display: flex; align-items: center; gap: 14px; padding: 20px 24px;
@@ -107,8 +156,6 @@ mark { background: linear-gradient(transparent 55%, var(--mark) 55%); color: inh
 }
 .src:hover { border-color: var(--cite); }
 .src .sup { margin: 0; vertical-align: 0; }
-.tryrow { margin-top: 22px; max-width: 820px; }
-.tryrow p { font: 500 15px var(--display); color: var(--slate); margin: 0 0 10px; }
 .chips { display: flex; flex-wrap: wrap; gap: 10px; }
 .chip {
   font: 500 15.5px/1.3 var(--display); color: var(--ink); background: transparent; cursor: pointer;
@@ -204,7 +251,8 @@ footer { background: var(--ink); color: #8F98AD; font: 400 14px var(--display); 
 footer .wrap { padding: 0 24px 40px; }
 
 @media (max-width: 960px) {
-  .hero { grid-template-columns: 1fr; gap: 32px; }
+  .hero-row, .mapbody, .askwrap { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  .mappanel { min-height: 0; }
 }
 @media (max-width: 860px) {
   .case-head, .body-grid { grid-template-columns: minmax(0, 1fr); gap: 14px; }
@@ -221,6 +269,8 @@ footer .wrap { padding: 0 24px 40px; }
   body { font-size: 17px; }
   .top { flex-direction: column; align-items: flex-start; }
   .reply { min-height: 260px; }
+  .mapcard { padding: 18px 14px 14px; border-radius: 20px; }
+  .qtab { font-size: 14.5px; }
 }
 </style>
 </head>
@@ -239,29 +289,46 @@ footer .wrap { padding: 0 24px 40px; }
 
 <main>
 <section class="hero" aria-labelledby="hello">
-  <div class="hero-intro">
-  <h1 id="hello">When people ask AI who to hire, I find out who gets left out.</h1>
-  <p class="lede">I work on go-to-market and AI search. I check how ChatGPT, Perplexity, Google AI Mode and Claude answer the questions customers ask, figure out why good businesses get skipped, and reach out to them with what I found. M.S. in Computer Science, Villanova. Based in Devon, PA.</p>
+  <div class="hero-row">
+    <h1 id="hello">When people ask AI who to hire, I find out who gets left out.</h1>
+    <p class="lede">I work on go-to-market and AI search. I check how ChatGPT, Perplexity, Google AI Mode and Claude answer the questions customers ask, figure out why good businesses get skipped, and reach out to them with what I found. M.S. in Computer Science, Villanova. Based in Devon, PA.</p>
   </div>
-  <div class="hero-demo">
 
-  <div class="answerbox">
-    <div class="ask">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M20 20l-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-      <span id="q" aria-live="polite"></span><span class="caret" aria-hidden="true"></span>
+  <div class="mapcard" id="map">
+    <div class="maptop">
+      <p class="maphint">Pick a question couples ask. Then click any AI tool, website or business on the map.</p>
+      <div class="qtabs" role="tablist" aria-label="Customer question" id="qtabs"></div>
     </div>
-    <div class="reply" id="reply" aria-live="polite"></div>
-    <div class="sources" id="sources" aria-label="Sources for this answer"></div>
+    <div class="mapbody">
+      <div class="mapsvg"><svg id="msvg" role="group" aria-label="Map of which websites each AI tool used and how it ranked the business"></svg>
+        <div class="legend" aria-hidden="true"><span><i class="lg-top"></i>Top pick</span><span><i class="lg-named"></i>Named</span><span><i class="lg-miss"></i>Left out</span><span><i class="lg-none"></i>Not checked</span></div>
+      </div>
+      <div class="mappanel" aria-live="polite"><p class="pkick" id="pkick"></p><h3 id="ptitle"></h3><p id="ptext"></p></div>
+    </div>
+    <p class="mapnote">Real results from my November 2026 checks: Claude asked 5 times per question, the other tools checked by hand. Lines show the websites each tool cited; Claude's lines are its most-used sources across questions about that business. Business names hidden.</p>
   </div>
+</section>
 
-  <div class="tryrow">
-    <p>Ask me something else</p>
-    <div class="chips" id="chips"></div>
-  </div>
+<section class="block" id="ask" aria-labelledby="askh">
+  <div class="wrap askwrap">
+    <div>
+      <h2 id="askh">Questions people ask me</h2>
+      <p class="small">Pick one. Each answer links to the work behind it.</p>
+      <div class="chips" id="chips"></div>
+    </div>
+    <div class="answerbox">
+      <div class="ask">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M20 20l-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <span id="q" aria-live="polite"></span><span class="caret" aria-hidden="true"></span>
+      </div>
+      <div class="reply" id="reply" aria-live="polite"></div>
+      <div class="sources" id="sources" aria-label="Sources for this answer"></div>
+    </div>
   </div>
 </section>
 
 <!-- Case 1 -->
+<span id="projects" aria-hidden="true"></span>
 <section class="block" id="wedding">
   <div class="wrap">
     <div class="case-head">
@@ -510,7 +577,10 @@ footer .wrap { padding: 0 24px 40px; }
     b.addEventListener("click", function () { show(i); });
     chips.appendChild(b);
   });
-  show(0);
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function (es) { if (es[0].isIntersecting) { io.disconnect(); show(0); } }, { threshold: 0.4 });
+    io.observe(document.querySelector("#ask .answerbox"));
+  } else { show(0); }
 
   // platform switcher
   var P = {
@@ -534,6 +604,243 @@ footer .wrap { padding: 0 24px 40px; }
     });
   });
   pick(tabs[0]);
+})();
+</script>
+<script>
+(function () {
+  var NS = "http://www.w3.org/2000/svg";
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  var TOOLS = [
+    { id: "claude", name: "Claude" },
+    { id: "chatgpt", name: "ChatGPT" },
+    { id: "perplexity", name: "Perplexity" },
+    { id: "google", name: "Google AI" }
+  ];
+  var SOURCES = [
+    { id: "zola", name: "Zola", about: "A wedding directory. Claude cited Zola in all 50 of its answers to my planner questions." },
+    { id: "knot", name: "The Knot", about: "A wedding directory with vendor profiles and reviews." },
+    { id: "ww", name: "WeddingWire", about: "A wedding directory. This is where the florist's 13 reviews sit under the wrong town." },
+    { id: "philly", name: "Philly Mag", about: "Philadelphia Magazine. Its Best of Philly list names the florist, and Perplexity used it." },
+    { id: "own", name: "Own website", about: "The business's own website. Claude never used the planners' own sites (0 of 50). Perplexity often did." },
+    { id: "venue", name: "Venue site", about: "The mansion venue's own website. Its gallery credits the décor company under three different names." },
+    { id: "salon", name: "Salon list", about: "A hair-salon directory that still shows the décor company's old name. Claude used it in 10 of 25 answers about that company." },
+    { id: "glist", name: "Google listing", about: "The business listing on Google. Google AI Mode and ChatGPT both showed the décor company's category as \"Wedding venue\", which isn't what it does. That label most likely comes from its listing." }
+  ];
+
+  // status: top | named | miss | none
+  var QS = [
+    {
+      id: "planner", q: "Best wedding planner near King of Prussia?",
+      biz: "Florist & event planner", tally: "Left out by 3 of 4 AI tools",
+      bizNote: "This company plans full events, but AI tools file it under flowers. Only ChatGPT mentioned it for a planner question, and only as \"best for flowers and décor.\" Its 13 WeddingWire reviews are also listed under the wrong town.",
+      summary: "A business with great reviews that plans weddings, and three of four AI tools leave it out when couples ask for a planner.",
+      tools: {
+        claude: { s: "miss", badge: "0 of 10", src: ["zola", "ww", "knot"], t: "Claude didn't name it in any of 10 answers. It named other planners and leaned on wedding directories; Zola showed up every single time." },
+        chatgpt: { s: "named", badge: "#4", src: [], t: "ChatGPT listed it 4th, described as \"best for flowers and décor.\" So it knows the business, but not as a planner. I didn't save ChatGPT's sources for this one." },
+        perplexity: { s: "miss", badge: "Left out", src: ["ww", "knot", "zola", "philly"], t: "Perplexity didn't mention it in 2 tries. It built its answer from WeddingWire, The Knot, Zola and Philadelphia Magazine." },
+        google: { s: "miss", badge: "Left out", src: [], t: "Google AI Mode didn't mention it. I didn't save its sources for this question." }
+      }
+    },
+    {
+      id: "florist", q: "Best wedding florist near King of Prussia?",
+      biz: "Florist & event planner", tally: "Top pick on Perplexity, named by Claude",
+      bizNote: "Same company, different question. Ask for a florist and it's a top pick. That's why I sort businesses by why they go missing, not by one score.",
+      summary: "Ask for a florist instead of a planner, and the same company jumps to the top.",
+      tools: {
+        claude: { s: "named", badge: "5 of 5", src: ["knot", "zola", "ww"], t: "Claude named it in all 5 of its florist answers." },
+        chatgpt: { s: "none", badge: "Not checked", src: [], t: "I haven't checked ChatGPT for this question yet." },
+        perplexity: { s: "top", badge: "#1", src: ["philly", "own", "ww", "knot"], t: "Perplexity made it the top pick and cited the company's own website, plus Philadelphia Magazine's Best of Philly list." },
+        google: { s: "none", badge: "Not checked", src: [], t: "I haven't checked Google AI Mode for this question yet." }
+      }
+    },
+    {
+      id: "venue", q: "Who should decorate a wedding at this mansion?",
+      biz: "Décor company", tally: "Top pick on 3 of 4 AI tools",
+      bizNote: "It's the top pick on three tools. The risk is its name: Claude used the old business name in 13 of 15 answers, and the venue's gallery credits it under three names. So my message to them was about protecting their spot, not fixing a problem.",
+      summary: "Claude makes this company look half-known. The other three tools all rank it first.",
+      tools: {
+        claude: { s: "named", badge: "5 of 5*", src: ["ww", "knot", "zola", "salon"], t: "Claude recommended it in 5 of 5 tries, but mostly under its old business name (13 of 15 answers overall). One source still showing the old name is a hair-salon directory." },
+        chatgpt: { s: "top", badge: "#1", src: ["glist"], t: "ChatGPT ranked it first, but showed its category as \"Wedding venue\", the same wrong label Google AI Mode used." },
+        perplexity: { s: "top", badge: "#1", src: ["own", "venue"], t: "Perplexity ranked it first, using the company's own portfolio page, which names each venue it has worked at." },
+        google: { s: "top", badge: "#1", src: ["glist"], t: "Google AI Mode ranked it first and called it an \"in-house decorator\", but showed its category as \"Wedding venue\"." }
+      }
+    }
+  ];
+
+  var COLORS = { top: "#16213A", named: "#4B3FD6", miss: "#C2410C", none: "#C9CDD6" };
+  var svg = document.getElementById("msvg"), tabsEl = document.getElementById("qtabs");
+  var pk = document.getElementById("pkick"), pt = document.getElementById("ptitle"), px = document.getElementById("ptext");
+  var cur = 0, sel = null, layout, drawRun = 0;
+
+  function el(tag, attrs, parent) {
+    var e = document.createElementNS(NS, tag);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(e);
+    return e;
+  }
+  function getLayout() {
+    var w = svg.parentNode.clientWidth;
+    if (w < 560) {
+      return { W: 360, H: 492, r: 33, fs: 10.5, tools: [50, 137, 223, 310].map(function (x) { return { x: x, y: 52 }; }),
+        src: SOURCES.map(function (s, i) { return { x: 45 + (i % 4) * 90, y: i < 4 ? 228 : 288, w: 82 }; }),
+        biz: { x: 180, y: 410, w: 250 } };
+    }
+    return { W: 780, H: 432, r: 42, fs: 14, tools: [97, 292, 488, 683].map(function (x) { return { x: x, y: 58 }; }),
+      src: SOURCES.map(function (s, i) { return { x: 48.75 + i * 97.5, y: 248, w: 80 }; }),
+      biz: { x: 390, y: 368, w: 300 } };
+  }
+
+  function build() {
+    layout = getLayout();
+    svg.setAttribute("viewBox", "0 0 " + layout.W + " " + layout.H);
+    svg.innerHTML = "";
+    el("g", { id: "wires" }, svg);
+    // sources
+    SOURCES.forEach(function (s, i) {
+      var p = layout.src[i];
+      var g = el("g", { "class": "node src", "data-src": s.id, tabindex: 0, role: "button", "aria-label": s.name + " (website)" }, svg);
+      el("rect", { "class": "focusring", x: p.x - p.w / 2 - 4, y: p.y - 19, width: p.w + 8, height: 38, rx: 19 }, g);
+      el("rect", { "class": "chipbg", x: p.x - p.w / 2, y: p.y - 15, width: p.w, height: 30, rx: 15 }, g);
+      var t = el("text", { x: p.x, y: p.y + 4.5, "text-anchor": "middle" }, g); t.textContent = s.name;
+      if (layout.W < 400) t.setAttribute("style", "font-size:11.5px");
+    });
+    // fit chips to their text
+    [].forEach.call(svg.querySelectorAll(".src"), function (g, i) {
+      var tw = g.querySelector("text").getComputedTextLength() + 22, p = layout.src[i];
+      var w = Math.max(p.w, tw); var rs = g.querySelectorAll("rect");
+      rs[0].setAttribute("x", p.x - w / 2 - 4); rs[0].setAttribute("width", w + 8);
+      rs[1].setAttribute("x", p.x - w / 2); rs[1].setAttribute("width", w);
+    });
+    // business
+    var b = layout.biz;
+    var bg = el("g", { "class": "node biz", tabindex: 0, role: "button", "aria-label": "The business" }, svg);
+    el("rect", { "class": "focusring", x: b.x - b.w / 2 - 5, y: b.y - 29, width: b.w + 10, height: 58, rx: 29 }, bg);
+    el("rect", { "class": "bizbg", x: b.x - b.w / 2, y: b.y - 25, width: b.w, height: 50, rx: 25 }, bg);
+    var bt = el("text", { x: b.x, y: b.y + 5.5, "text-anchor": "middle", id: "biztext" }, bg);
+    el("text", { x: b.x, y: b.y + 48, "text-anchor": "middle", id: "biztally", "class": "tally" }, svg);
+    // tools
+    TOOLS.forEach(function (t, i) {
+      var p = layout.tools[i];
+      var g = el("g", { "class": "node tool", "data-tool": t.id, tabindex: 0, role: "button", "aria-label": t.name }, svg);
+      el("circle", { "class": "focusring", cx: p.x, cy: p.y, r: layout.r + 5 }, g);
+      el("circle", { "class": "disc", cx: p.x, cy: p.y, r: layout.r }, g);
+      var tx = el("text", { "class": "lbl", x: p.x, y: p.y + layout.fs / 3, "text-anchor": "middle", "font-size": layout.fs, "font-weight": 700 }, g);
+      tx.textContent = t.name;
+      var bd = el("g", { "class": "badge", "data-badge": t.id, opacity: 0 }, g);
+      el("rect", { x: p.x - 38, y: p.y + layout.r + 9, width: 76, height: 24, rx: 12 }, bd);
+      var bt2 = el("text", { x: p.x, y: p.y + layout.r + 25.5, "text-anchor": "middle" }, bd);
+      bt2.textContent = "";
+    });
+    [].forEach.call(svg.querySelectorAll(".node"), function (n) {
+      n.addEventListener("click", function () { choose(n); });
+      n.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); choose(n); } });
+    });
+  }
+
+  function curve(x1, y1, x2, y2) {
+    var my = (y1 + y2) / 2;
+    return "M" + x1 + "," + y1 + " C" + x1 + "," + my + " " + x2 + "," + my + " " + x2 + "," + y2;
+  }
+  function wait(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
+
+  async function draw(animate) {
+    var my = ++drawRun, Q = QS[cur], wires = svg.querySelector("#wires");
+    wires.innerHTML = ""; sel = null; clearOn();
+    svg.querySelector("#biztext").textContent = Q.biz;
+    svg.querySelector("#biztally").textContent = Q.tally;
+    svg.querySelector(".biz").setAttribute("aria-label", "The business: " + Q.biz);
+    var used = {};
+    TOOLS.forEach(function (t) { Q.tools[t.id].src.forEach(function (s) { used[s] = 1; }); });
+    [].forEach.call(svg.querySelectorAll(".src"), function (n) { n.classList.toggle("used", !!used[n.getAttribute("data-src")]); });
+    [].forEach.call(svg.querySelectorAll(".badge"), function (b) { b.setAttribute("opacity", 0); });
+    // faint lines source -> business
+    Object.keys(used).forEach(function (sid) {
+      var i = SOURCES.findIndex(function (s) { return s.id === sid; }), p = layout.src[i], b = layout.biz;
+      el("path", { "class": "wire down", d: curve(p.x, p.y + 15, b.x, b.y - 25), "data-s": sid }, wires);
+    });
+    for (var ti = 0; ti < TOOLS.length; ti++) {
+      if (my !== drawRun) return;
+      var t = TOOLS[ti], r = Q.tools[t.id], tp = layout.tools[ti];
+      r.src.forEach(function (sid) {
+        var i = SOURCES.findIndex(function (s) { return s.id === sid; }), p = layout.src[i];
+        var path = el("path", { "class": "wire", d: curve(tp.x, tp.y + layout.r + 33, p.x, p.y - 15), "data-t": t.id, "data-s": sid, stroke: COLORS[r.s === "none" ? "named" : r.s] }, wires);
+        path.style.stroke = r.s === "miss" ? "#9AA2B4" : "";
+        if (animate && !reduce) {
+          var L = path.getTotalLength();
+          path.style.strokeDasharray = L; path.style.strokeDashoffset = L;
+          path.getBoundingClientRect();
+          path.style.transition = "stroke-dashoffset .7s ease";
+          path.style.strokeDashoffset = 0;
+        }
+      });
+      var bd = svg.querySelector('[data-badge="' + t.id + '"]');
+      bd.querySelector("rect").setAttribute("fill", r.s === "none" ? "#E7E9EE" : COLORS[r.s]);
+      bd.querySelector("text").textContent = r.badge;
+      bd.setAttribute("class", "badge" + (r.s === "none" ? " none" : ""));
+      var disc = svg.querySelector('[data-tool="' + t.id + '"] .disc');
+      disc.style.stroke = COLORS[r.s]; disc.style.strokeWidth = r.s === "none" ? 2 : 5;
+      svg.querySelector('[data-tool="' + t.id + '"]').style.setProperty("--st", COLORS[r.s]);
+      if (animate && !reduce) await wait(380);
+      bd.setAttribute("opacity", 1);
+    }
+    showSummary();
+  }
+
+  function clearOn() { [].forEach.call(svg.querySelectorAll(".on"), function (n) { n.classList.remove("on"); }); dim(null, null); }
+  function dim(attr, val) {
+    [].forEach.call(svg.querySelectorAll(".wire"), function (w) {
+      w.classList.toggle("dim", !!attr && w.getAttribute(attr) !== val);
+    });
+  }
+  function showSummary() {
+    var Q = QS[cur];
+    pk.textContent = "What this question shows";
+    pt.textContent = Q.q;
+    px.textContent = Q.summary + " Click a tool, website or the business to see the details.";
+  }
+  function choose(n) {
+    var Q = QS[cur];
+    if (n.classList.contains("on")) { clearOn(); showSummary(); return; }
+    clearOn(); n.classList.add("on");
+    if (n.classList.contains("tool")) {
+      var id = n.getAttribute("data-tool"), t = TOOLS.find(function (x) { return x.id === id; }), r = Q.tools[id];
+      dim("data-t", id);
+      pk.textContent = { top: "Top pick", named: "Named", miss: "Left out", none: "Not checked yet" }[r.s];
+      pt.textContent = t.name; px.textContent = r.t;
+    } else if (n.classList.contains("src")) {
+      var sid = n.getAttribute("data-src"), s = SOURCES.find(function (x) { return x.id === sid; });
+      dim("data-s", sid);
+      var by = TOOLS.filter(function (t) { return Q.tools[t.id].src.indexOf(sid) >= 0; }).map(function (t) { return t.name; });
+      pk.textContent = "Website";
+      pt.textContent = s.name;
+      px.textContent = s.about + (by.length ? " For this question it was used by " + by.join(" and ") + "." : " None of the tools used it for this question.");
+    } else {
+      pk.textContent = "The business";
+      pt.textContent = Q.biz;
+      px.textContent = Q.bizNote;
+    }
+  }
+
+  QS.forEach(function (Q, i) {
+    var b = document.createElement("button");
+    b.className = "qtab"; b.type = "button"; b.setAttribute("role", "tab"); b.textContent = Q.q;
+    b.setAttribute("aria-selected", i === 0 ? "true" : "false");
+    b.addEventListener("click", function () {
+      cur = i;
+      [].forEach.call(tabsEl.children, function (c, j) { c.setAttribute("aria-selected", j === i ? "true" : "false"); });
+      draw(true);
+    });
+    tabsEl.appendChild(b);
+  });
+
+  build(); draw(true);
+  var lastW = svg.parentNode.clientWidth;
+  window.addEventListener("resize", function () {
+    var w = svg.parentNode.clientWidth;
+    if ((w < 560) !== (lastW < 560)) { build(); draw(false); }
+    lastW = w;
+  });
 })();
 </script>
 </body>
