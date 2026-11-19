@@ -1,2 +1,0 @@
-# No extra packages needed: the scripts use only Python's standard library.
-# You also need Claude Code installed (the "claude" command), which the scripts call with web search on.
