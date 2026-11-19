@@ -301,7 +301,7 @@ footer .wrap { padding: 0 24px 40px; }
     </div>
     <div class="mapbody">
       <div class="mapsvg"><svg id="msvg" role="group" aria-label="Map of which websites each AI tool used and how it ranked the business"></svg>
-        <div class="legend" aria-hidden="true"><span><i class="lg-top"></i>Top pick</span><span><i class="lg-named"></i>Named</span><span><i class="lg-miss"></i>Left out</span><span><i class="lg-none"></i>Not checked</span></div>
+        <div class="legend" aria-hidden="true"><span><i class="lg-top"></i>Top pick</span><span><i class="lg-named"></i>Named</span><span><i class="lg-miss"></i>Left out</span></div>
       </div>
       <div class="mappanel" aria-live="polite"><p class="pkick" id="pkick"></p><h3 id="ptitle"></h3><p id="ptext"></p></div>
     </div>
@@ -644,14 +644,14 @@ footer .wrap { padding: 0 24px 40px; }
     },
     {
       id: "florist", q: "Best wedding florist near King of Prussia?",
-      biz: "Florist & event planner", tally: "Top pick on Perplexity, named by Claude",
-      bizNote: "Same company, different question. Ask for a florist and it's a top pick. That's why I sort businesses by why they go missing, not by one score.",
-      summary: "Ask for a florist instead of a planner, and the same company jumps to the top.",
+      biz: "Florist & event planner", tally: "#1 on Perplexity, left out by Google AI",
+      bizNote: "Same company, different question. Perplexity makes it the top florist, Claude names it every time, ChatGPT lists it 5th, and Google AI Mode leaves it out. That's why I sort businesses by why they go missing, not by one score.",
+      summary: "Ask for a florist instead of a planner, and the same company jumps to #1 on Perplexity. Google AI Mode still leaves it out.",
       tools: {
         claude: { s: "named", badge: "5 of 5", src: ["knot", "zola", "ww"], t: "Claude named it in all 5 of its florist answers." },
-        chatgpt: { s: "none", badge: "Not checked", src: [], t: "I haven't checked ChatGPT for this question yet." },
+        chatgpt: { s: "named", badge: "#5", src: ["glist"], t: "ChatGPT listed it 5th, as \"full-service event production, wedding florals and décor,\" citing Google. The top three were florists with WeddingWire reviews." },
         perplexity: { s: "top", badge: "#1", src: ["philly", "own", "ww", "knot"], t: "Perplexity made it the top pick and cited the company's own website, plus Philadelphia Magazine's Best of Philly list." },
-        google: { s: "none", badge: "Not checked", src: [], t: "I haven't checked Google AI Mode for this question yet." }
+        google: { s: "miss", badge: "Left out", src: ["glist"], t: "Google AI Mode named five other florists, all pulled from Google business listings, and didn't mention this one." }
       }
     },
     {
