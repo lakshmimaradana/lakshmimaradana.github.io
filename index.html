@@ -493,11 +493,11 @@ footer .wrap { padding: 0 24px 40px; }
 (function () {
   var QA = [
     {
-      q: "How do you find out why AI tools skip a good business?",
+      q: "Why do AI tools skip a good business?",
       a: [
-        "I ask the AI tools the same questions customers ask, many times over. I built a Python tool that runs each question through Claude 5 times, and I check ChatGPT, Perplexity and Google AI Mode by hand.",
-        { t: "That's how I found a décor company Claude kept calling by its old name, and a florist whose 13 reviews were filed under the wrong town.", c: [1] },
-        { t: "I also audited a restaurant that every AI tool named, but with 2023 prices.", c: [2] }
+        { t: "Mostly because AI doesn't judge the business itself. It repeats what other websites say about it. In my checks, Claude cited Zola in all 50 planner answers and the planners' own websites in none.", c: [1] },
+        { t: "So a great business gets skipped when those websites get it wrong: an old business name, a listing in the wrong town, or a category that doesn't match what it does.", c: [1] },
+        { t: "I found this by asking four AI tools the same customer questions and following every cited link back to the page behind the answer. That's how I found a florist whose 13 reviews sit under the wrong town, and a restaurant whose 2023 menu listings made every AI quote old prices.", c: [1, 2] }
       ]
     },
     {
@@ -553,8 +553,9 @@ footer .wrap { padding: 0 24px 40px; }
       await wait(320);
     }
     var used = [];
-    var p = document.createElement("p"); rEl.appendChild(p);
+    var p;
     for (var s = 0; s < item.a.length; s++) {
+      p = document.createElement("p"); rEl.appendChild(p);
       var part = item.a[s], text = typeof part === "string" ? part : part.t, cites = typeof part === "string" ? [] : part.c;
       var span = document.createElement("span"); p.appendChild(span);
       var words = (text + " ").split(/(\s+)/);
