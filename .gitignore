@@ -1,0 +1,9 @@
+.env
+result.txt
+install_log.txt
+__pycache__/
+messages/
+outreach_log.csv
+reports/
+old_experiments/
+*_backup*.csv
